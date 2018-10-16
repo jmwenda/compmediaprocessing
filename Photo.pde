@@ -6,7 +6,7 @@ class Photo{
   float x,y;
   
   
-  // Create the Bubble
+  // Create the Photo
   Photo(String n, String t, String d,float imageplacementX, float imageplacementY) {
     name = n;
     tag = t;

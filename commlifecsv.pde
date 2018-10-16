@@ -25,7 +25,7 @@ void setup() {
     String time = row.getString("Date (yyyy_mm_dd_hh_mm_ss)");
     String name = row.getString("Name");
     String tag = row.getString("Tag 1");
-    // Make a Bubble object out of the data from each row.
+    //make our photo
     photos[i] = new Photo(name,time, tag, imagePlacementX,imagePlacementY);
     imagePlacementX = moveImage * 100;
     if (imagePlacementX >= 800) {
