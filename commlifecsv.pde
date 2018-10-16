@@ -1,9 +1,11 @@
 Table table;
 Photo[] photos;
 
-int imagePlacementX = 0; // X axis position of the image
-int imagePlacementY = 0; // Y axis position of the image
-int moveImage = 0;
+float imagePlacementX = 0; // X axis position of the image
+float imagePlacementY = 0; // Y axis position of the image
+int moveImage = 1;
+int displayImage = 0; // Element of the array being accessed
+
 
 String showImage; // Current Image being displayed
 String firstImage;
@@ -24,38 +26,36 @@ void setup() {
     String name = row.getString("Name");
     String tag = row.getString("Tag 1");
     // Make a Bubble object out of the data from each row.
-    photos[i] = new Photo(name,time, tag);
+    photos[i] = new Photo(name,time, tag, imagePlacementX,imagePlacementY);
+    imagePlacementX = moveImage * 100;
+    if (imagePlacementX >= 800) {
+      imagePlacementX = 0;
+      imagePlacementY += 100;
+      moveImage = 0;
+    } else if (imagePlacementY >= 800) {
+      imagePlacementX = 0;
+      imagePlacementY = 0;
+      moveImage = 0;
+    }
+    displayImage ++;
+    moveImage++;
+    
+    if (displayImage >= photos.length){
+      displayImage = 0;
+      
+    }
 
   }
+  /*for (int i = 0; i<photos.length; i++) {
+  println(photos[i].name+ " , "+i +" , " + photos[i].x + ", " + photos[i].y);
+  }*/
   
 }
 
 void draw() {
   background(255);
-  // Display all bubbles
   for (int i = 0; i<photos.length; i++) {
-
-    println(photos[i].name);
-    PImage img = loadImage(photos[i].name + ".JPG");
-    image(img,imagePlacementX,imagePlacementY,40,40); // Display the image from the current JSON Object
-    println(imagePlacementX+ " , " + imagePlacementY);
-    
-    imagePlacementX = moveImage * 40;
-    if (imagePlacementX >= 800) {
-     imagePlacementX = 0;
-     imagePlacementY += 40;
-     moveImage = 0;
-    } else if (imagePlacementY >= 800) {
-     imagePlacementX = 0;
-     imagePlacementY = 0;
-     moveImage = 0;
-    }
-    moveImage++;
-    
-    if(i >= photos.length) { // Reset loop
-      i = 0;
-    }
-
-    
+    photos[i].display();
   }
+   
 }
